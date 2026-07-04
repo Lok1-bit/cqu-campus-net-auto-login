@@ -39,7 +39,9 @@ jobs:
       - name: Run offline Pester tests
         shell: powershell
         run: |
-          $result = Invoke-Pester -Path '.\tests\CquCampusNet.Tests.ps1' -PassThru
+          # Positional path works with the Pester 3 bundled in Windows PowerShell
+          # and with newer Pester releases. Pester 3 does not expose -Path.
+          $result = Invoke-Pester '.\tests\CquCampusNet.Tests.ps1' -PassThru
           if ($result.FailedCount -gt 0) {
               throw "$($result.FailedCount) test(s) failed."
           }

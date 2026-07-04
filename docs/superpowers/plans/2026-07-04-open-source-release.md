@@ -106,7 +106,7 @@ Assert-NotMatches $safe 'sample-password'
 Use `actions/checkout@v4`, parse repository scripts with `System.Management.Automation.Language.Parser`, then run the preinstalled Pester:
 
 ```powershell
-$result = Invoke-Pester -Path '.\tests\CquCampusNet.Tests.ps1' -PassThru
+$result = Invoke-Pester '.\tests\CquCampusNet.Tests.ps1' -PassThru
 if ($result.FailedCount -gt 0) { throw "$($result.FailedCount) tests failed." }
 ```
 
