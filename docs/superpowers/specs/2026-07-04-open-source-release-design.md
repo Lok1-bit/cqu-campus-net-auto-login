@@ -36,7 +36,7 @@ GitHub Actions 在 `main` 推送和 Pull Request 时运行，使用 `windows-lat
 3. 运行 Pester 离线测试。
 4. 确保测试失败时工作流返回非零状态。
 
-CI 不访问重庆大学门户，不创建计划任务，不读写 Windows 凭据管理器，不需要任何 Secret。为同时兼容 Windows 10/11 随附的 Pester 3.4，本地测试保留旧式断言语法；CI 明确安装并导入兼容该语法的 Pester 4.10.1，避免 runner 预装版本变化导致结果漂移。
+CI 不访问重庆大学门户，不创建计划任务，不读写 Windows 凭据管理器，不需要任何 Secret。测试使用自身的小型断言函数，避免 Pester 3、4、5 的 `Should` 语法差异；本地与 CI 可直接使用环境预装的 Pester，不需要联网安装模块。
 
 ## 安全与隐私
 
