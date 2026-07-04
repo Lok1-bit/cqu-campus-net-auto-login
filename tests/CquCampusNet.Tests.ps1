@@ -1,7 +1,3 @@
-$here = Split-Path -Parent $MyInvocation.MyCommand.Path
-$root = Split-Path -Parent $here
-$modulePath = Join-Path $root 'CquCampusNet.psm1'
-
 function Assert-Equal {
     param($Actual, $Expected)
     if ($Actual -ne $Expected) { throw "Expected '$Expected', got '$Actual'." }
@@ -36,7 +32,8 @@ function Assert-GreaterThan {
 
 Describe 'CQU campus network core functions' {
     BeforeAll {
-        Import-Module $modulePath -Force
+        $script:testRoot = Split-Path -Parent $PSScriptRoot
+        Import-Module (Join-Path $script:testRoot 'CquCampusNet.psm1') -Force
     }
 
     Context 'JSON and JSONP parsing' {
@@ -88,7 +85,7 @@ Describe 'CQU campus network core functions' {
 
     Context 'configuration and backoff' {
         It 'loads valid defaults' {
-            $config = Read-CquConfig -Path (Join-Path $root 'config.psd1')
+            $config = Read-CquConfig -Path (Join-Path $script:testRoot 'config.psd1')
             Assert-Equal $config.CheckIntervalSeconds 30
             Assert-Equal $config.RequestTimeoutSeconds 10
         }
@@ -159,7 +156,7 @@ Describe 'CQU campus network core functions' {
 
     Context 'script safety and lifecycle wiring' {
         It 'imports the local module and guards status-only mode before credential access' {
-            $content = Get-Content -LiteralPath (Join-Path $root 'cqu-campus-net.ps1') -Raw
+            $content = Get-Content -LiteralPath (Join-Path $script:testRoot 'cqu-campus-net.ps1') -Raw
             Assert-Matches $content 'Import-Module.*CquCampusNet\.psm1'
             $statusPosition = $content.IndexOf('if ($StatusOnly)')
             $credentialPosition = $content.IndexOf('$credential = Get-CquCredential')
@@ -168,7 +165,7 @@ Describe 'CQU campus network core functions' {
         }
 
         It 'registers a hidden logon task with non-parallel execution' {
-            $content = Get-Content -LiteralPath (Join-Path $root 'install.ps1') -Raw
+            $content = Get-Content -LiteralPath (Join-Path $script:testRoot 'install.ps1') -Raw
             Assert-Matches $content '-WindowStyle Hidden'
             Assert-Matches $content 'New-ScheduledTaskTrigger -AtLogOn'
             Assert-Matches $content '-MultipleInstances IgnoreNew'
@@ -176,7 +173,7 @@ Describe 'CQU campus network core functions' {
         }
 
         It 'removes the same task and credential during uninstall' {
-            $content = Get-Content -LiteralPath (Join-Path $root 'uninstall.ps1') -Raw
+            $content = Get-Content -LiteralPath (Join-Path $script:testRoot 'uninstall.ps1') -Raw
             Assert-Matches $content 'Get-CquTaskName'
             Assert-Matches $content 'Unregister-ScheduledTask'
             Assert-Matches $content 'Remove-CquCredential'

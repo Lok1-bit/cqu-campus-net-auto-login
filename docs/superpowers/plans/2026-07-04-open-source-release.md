@@ -103,7 +103,7 @@ Assert-NotMatches $safe 'sample-password'
 
 - [ ] **Step 2: Add offline Windows workflow**
 
-Use `actions/checkout@v4`, parse repository scripts with `System.Management.Automation.Language.Parser`, then run the preinstalled Pester:
+Use `actions/checkout@v6`, parse repository scripts with `System.Management.Automation.Language.Parser`, then run the preinstalled Pester:
 
 ```powershell
 $result = Invoke-Pester '.\tests\CquCampusNet.Tests.ps1' -PassThru
