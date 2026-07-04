@@ -1,39 +1,39 @@
-function Assert-Equal {
-    param($Actual, $Expected)
-    if ($Actual -ne $Expected) { throw "Expected '$Expected', got '$Actual'." }
-}
-
-function Assert-Matches {
-    param([string]$Actual, [string]$Pattern)
-    if ($Actual -notmatch $Pattern) { throw "Expected value to match '$Pattern'." }
-}
-
-function Assert-NotMatches {
-    param([string]$Actual, [string]$Pattern)
-    if ($Actual -match $Pattern) { throw "Expected value not to match '$Pattern'." }
-}
-
-function Assert-Throws {
-    param([scriptblock]$Action)
-    $didThrow = $false
-    try { & $Action } catch { $didThrow = $true }
-    if (-not $didThrow) { throw 'Expected action to throw.' }
-}
-
-function Assert-DoesNotThrow {
-    param([scriptblock]$Action)
-    & $Action
-}
-
-function Assert-GreaterThan {
-    param($Actual, $Expected)
-    if ($Actual -le $Expected) { throw "Expected '$Actual' to be greater than '$Expected'." }
-}
-
 Describe 'CQU campus network core functions' {
     BeforeAll {
         $script:testRoot = Split-Path -Parent $PSScriptRoot
         Import-Module (Join-Path $script:testRoot 'CquCampusNet.psm1') -Force
+
+        function Assert-Equal {
+            param($Actual, $Expected)
+            if ($Actual -ne $Expected) { throw "Expected '$Expected', got '$Actual'." }
+        }
+
+        function Assert-Matches {
+            param([string]$Actual, [string]$Pattern)
+            if ($Actual -notmatch $Pattern) { throw "Expected value to match '$Pattern'." }
+        }
+
+        function Assert-NotMatches {
+            param([string]$Actual, [string]$Pattern)
+            if ($Actual -match $Pattern) { throw "Expected value not to match '$Pattern'." }
+        }
+
+        function Assert-Throws {
+            param([scriptblock]$Action)
+            $didThrow = $false
+            try { & $Action } catch { $didThrow = $true }
+            if (-not $didThrow) { throw 'Expected action to throw.' }
+        }
+
+        function Assert-DoesNotThrow {
+            param([scriptblock]$Action)
+            & $Action
+        }
+
+        function Assert-GreaterThan {
+            param($Actual, $Expected)
+            if ($Actual -le $Expected) { throw "Expected '$Actual' to be greater than '$Expected'." }
+        }
     }
 
     Context 'JSON and JSONP parsing' {
