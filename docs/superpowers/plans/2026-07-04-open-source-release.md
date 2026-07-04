@@ -6,7 +6,7 @@
 
 **Architecture:** Keep governance in root Markdown files, contributor interactions in `.github` templates, and offline Windows validation in one GitHub Actions workflow. No workflow may contact the CQU portal, access credentials, or mutate the runner's scheduled tasks.
 
-**Tech Stack:** MIT License, Markdown, GitHub Issue Forms, GitHub Actions, Windows PowerShell 5.1, Pester
+**Tech Stack:** MIT License, Markdown, GitHub Issue Forms, GitHub Actions, Windows PowerShell 5.1, local Pester 3.4, CI Pester 4.10.1
 
 ## Global Constraints
 
@@ -92,20 +92,22 @@ git commit -m "docs: add MIT license and project governance"
 **Interfaces:**
 - Produces: Windows CI on push/PR and structured, privacy-aware contributor forms.
 
-- [ ] **Step 1: Normalize Pester assertions**
+- [ ] **Step 1: Preserve cross-environment Pester assertions**
 
-Convert legacy forms such as `Should Be 1` to cross-version forms such as:
+Keep the legacy forms required by Windows PowerShell's bundled Pester 3.4, and pin Pester 4.10.1 in CI because it supports the same syntax:
 
 ```powershell
-$value.result | Should -Be 1
-$safe | Should -Not -Match 'sample-password'
+$value.result | Should Be 1
+$safe | Should Not Match 'sample-password'
 ```
 
 - [ ] **Step 2: Add offline Windows workflow**
 
-Use `actions/checkout@v4`, parse repository scripts with `System.Management.Automation.Language.Parser`, then run:
+Use `actions/checkout@v4`, parse repository scripts with `System.Management.Automation.Language.Parser`, install and import Pester 4.10.1, then run:
 
 ```powershell
+Install-Module Pester -RequiredVersion 4.10.1 -Scope CurrentUser -Force -SkipPublisherCheck
+Import-Module Pester -RequiredVersion 4.10.1 -Force
 $result = Invoke-Pester -Path '.\tests\CquCampusNet.Tests.ps1' -PassThru
 if ($result.FailedCount -gt 0) { throw "$($result.FailedCount) tests failed." }
 ```
