@@ -8,6 +8,7 @@
 .vscode/
 .idea/
 TestResults/
+logs/
 
 # Windows metadata
 Thumbs.db
