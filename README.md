@@ -1,6 +1,13 @@
 # CQU Campus Net Auto Login
 
+[![Test](https://github.com/Lok1-bit/cqu-campus-net-auto-login/actions/workflows/test.yml/badge.svg)](https://github.com/Lok1-bit/cqu-campus-net-auto-login/actions/workflows/test.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Platform: Windows](https://img.shields.io/badge/platform-Windows-0078D6.svg)](#系统要求)
+[![PowerShell 5.1+](https://img.shields.io/badge/PowerShell-5.1%2B-5391FE.svg)](#系统要求)
+
 重庆大学 Dr.COM 校园网自动登录工具。它在 Windows 用户登录后静默运行，定期检查认证状态，并在掉线后自动重新登录。
+
+当前稳定版本为 `v0.1.0`。这是个人维护的非官方项目，与重庆大学不存在隶属或授权关系。
 
 ## 功能
 
@@ -20,7 +27,14 @@
 
 ## 安装
 
-在项目目录中打开 PowerShell，运行：
+克隆仓库并进入项目目录：
+
+```powershell
+git clone https://github.com/Lok1-bit/cqu-campus-net-auto-login.git
+cd cqu-campus-net-auto-login
+```
+
+请先查看脚本内容并确认仓库来源可信。然后运行：
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -StartNow
@@ -129,3 +143,15 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Invoke-Pester '.\tes
 普通登录遵循重大当前 Dr.COM 网页的协议，通过 HTTPS 向 `login.cqu.edu.cn/drcom/login` 提交认证参数。脚本只在重大门户可达、且状态显示未认证时读取凭据。请仅从你信任的副本运行本项目，并在提交修改前确认日志和配置中没有个人信息。
 
 本项目是个人工具，不是重庆大学官方项目。
+
+## 参与项目
+
+- 提交修改前请阅读 [贡献指南](CONTRIBUTING.md)。
+- 安全漏洞请按照 [安全政策](SECURITY.md) 私下报告，不要创建公开 Issue。
+- 版本变化见 [CHANGELOG](CHANGELOG.md)。
+
+公开讨论和附件中请勿包含校园网账号、密码、完整 IP/MAC、原始门户 URL、未脱敏日志或截图。
+
+## 许可证
+
+项目采用 [MIT License](LICENSE)。在保留版权与许可声明的前提下，你可以使用、修改、分发或商用本软件。软件按原样提供，不附带担保；使用者需自行承担风险。
