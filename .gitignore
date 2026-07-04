@@ -1,0 +1,14 @@
+# Local credentials and runtime data
+*.credential
+*.secret
+*.log
+*.log.old
+
+# PowerShell tooling
+.vscode/
+.idea/
+TestResults/
+
+# Windows metadata
+Thumbs.db
+Desktop.ini
