@@ -1,4 +1,4 @@
-Describe 'CQU campus network core functions' {
+﻿Describe 'CQU campus network core functions' {
     BeforeAll {
         $script:testRoot = Split-Path -Parent $PSScriptRoot
         Import-Module (Join-Path $script:testRoot 'CquCampusNet.psm1') -Force
@@ -177,6 +177,30 @@ Describe 'CQU campus network core functions' {
             Assert-Matches $content 'Get-CquTaskName'
             Assert-Matches $content 'Unregister-ScheduledTask'
             Assert-Matches $content 'Remove-CquCredential'
+        }
+    }
+
+    Context 'double-click GUI launcher wiring' {
+        It 'starts the local GUI with a hidden execution-policy-bypassed PowerShell process' {
+            $cmdPath = Join-Path $script:testRoot 'CQU校园网工具.cmd'
+            if (-not (Test-Path -LiteralPath $cmdPath)) { throw 'Double-click CMD launcher is missing.' }
+            $content = Get-Content -LiteralPath $cmdPath -Raw
+            Assert-Matches $content 'powershell\.exe'
+            Assert-Matches $content '-ExecutionPolicy Bypass'
+            Assert-Matches $content '-WindowStyle Hidden'
+            Assert-Matches $content '%~dp0launcher\.ps1'
+        }
+
+        It 'delegates lifecycle actions and keeps status checks credential-free' {
+            $guiPath = Join-Path $script:testRoot 'launcher.ps1'
+            if (-not (Test-Path -LiteralPath $guiPath)) { throw 'PowerShell GUI launcher is missing.' }
+            $content = Get-Content -LiteralPath $guiPath -Raw
+            Assert-Matches $content 'Invoke-CquStatusRequest'
+            Assert-Matches $content 'install\.ps1'
+            Assert-Matches $content 'uninstall\.ps1'
+            Assert-Matches $content '-StartNow'
+            Assert-Matches $content '\[switch\]\$SelfTest'
+            Assert-NotMatches $content 'Invoke-CquLoginRequest'
         }
     }
 }
