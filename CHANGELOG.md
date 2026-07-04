@@ -4,6 +4,15 @@
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-07-04
+
+### Added
+
+- 可双击启动的 `CQU校园网工具.cmd`。
+- Windows Forms 图形界面，支持安装、状态检查、凭据更新和卸载。
+- 图形界面的计划任务状态、操作结果和日志目录入口。
+- 不打开窗口或修改系统的启动器自检与离线接线测试。
+
 ## [0.1.0] - 2026-07-04
 
 ### Added
@@ -16,5 +25,6 @@
 - 离线 Pester 测试与只读状态诊断。
 - MIT License、贡献指南、安全政策和 GitHub 协作模板。
 
-[Unreleased]: https://github.com/Lok1-bit/cqu-campus-net-auto-login/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/Lok1-bit/cqu-campus-net-auto-login/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/Lok1-bit/cqu-campus-net-auto-login/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/Lok1-bit/cqu-campus-net-auto-login/releases/tag/v0.1.0

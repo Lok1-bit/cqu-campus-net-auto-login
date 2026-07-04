@@ -7,7 +7,7 @@
 
 重庆大学 Dr.COM 校园网自动登录工具。它在 Windows 用户登录后静默运行，定期检查认证状态，并在掉线后自动重新登录。
 
-当前稳定版本为 `v0.1.0`。这是个人维护的非官方项目，与重庆大学不存在隶属或授权关系。
+当前稳定版本为 `v0.1.1`。这是个人维护的非官方项目，与重庆大学不存在隶属或授权关系。
 
 ## 功能
 
@@ -25,7 +25,20 @@
 - Windows PowerShell 5.1
 - 重庆大学校园网 Dr.COM 门户：`https://login.cqu.edu.cn/`
 
-## 安装
+## 双击使用（推荐）
+
+1. 在 GitHub 点击 **Code → Download ZIP**，或直接[下载项目 ZIP](https://github.com/Lok1-bit/cqu-campus-net-auto-login/archive/refs/heads/main.zip)。
+2. 完整解压 ZIP，不能直接在压缩包预览中运行。
+3. 双击 `CQU校园网工具.cmd`。
+4. 在图形窗口点击“安装并立即启动”，然后在 Windows 凭据框中输入校园网上网账号和密码。
+
+图形窗口还可以检查当前状态、更新账号密码、卸载自动登录和打开日志目录。安装完成后，每次登录 Windows 都会自动在后台运行，无需再次打开工具。
+
+安装不需要把账号或密码写进配置文件。计划任务默认以当前用户、最低权限运行。
+
+> 建议先查看脚本内容并确认仓库来源可信。如果 Windows 显示安全提醒，请核对下载地址确实属于 `Lok1-bit/cqu-campus-net-auto-login`。
+
+## 命令行安装（高级用法）
 
 克隆仓库并进入项目目录：
 
@@ -34,7 +47,7 @@ git clone https://github.com/Lok1-bit/cqu-campus-net-auto-login.git
 cd cqu-campus-net-auto-login
 ```
 
-请先查看脚本内容并确认仓库来源可信。然后运行：
+然后运行：
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -StartNow
@@ -47,11 +60,11 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -StartNow
 3. 执行一次不提交密码的状态检查；
 4. 使用 `-StartNow` 时立即启动后台监控。
 
-安装不需要把账号或密码写进任何配置文件。计划任务默认以当前用户、最低权限运行。
-
 ## 检查状态
 
-以下命令只读取在线状态，不读取或提交凭据：
+在图形窗口点击“检查当前状态”即可。该操作只读取在线状态，不读取或提交凭据。
+
+命令行方式：
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\cqu-campus-net.ps1 -StatusOnly
